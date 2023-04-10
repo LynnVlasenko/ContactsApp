@@ -11,8 +11,15 @@
 
 import UIKit
 
+protocol NewContactDelegate: AnyObject {
+    func didFillNameField(with text: String)
+    func didFillSurnameField(with text: String)
+    func didFillPhoneField(with text: String)
+}
+
 class ContactsVC: UIViewController {
 
+    
     //the ampty array to store data with the type of our ContactData model
     var contacts = [ContactData]()
     
@@ -55,6 +62,7 @@ class ContactsVC: UIViewController {
     
     @objc func didTapAdd() {
         let vc = AddContactVC()
+        vc.delegate = self //обовьязково треба підписатися під делегат бо він створений в середині AddContactVC() - інакше не запрацює
         navigationController?.pushViewController(vc, animated: true)
         //let nav = UINavigationController(rootViewController: vc)
         //чомусь не працював showDetailViewController - в чому може бути проблема?
@@ -73,8 +81,10 @@ class ContactsVC: UIViewController {
 extension ContactsVC: SetContactsDelegate {
     
     func getContact(contact: ContactData) {
-        contacts.append(contact) //додає Alarm дані до масиву alarms
-        contactsTable.reloadData() // і виконує метод оновити табличку - коли табличка починає оновлючатися іде перевірка у екстеншені нижче у функції з методом cellForRowAt - бачить що indexPath.section більше не 0 - і відображає AlarmTableViewCell на нашому поточному вью
+        DispatchQueue.main.async {
+            self.contacts.append(contact) //додає Alarm дані до масиву alarms
+            self.contactsTable.reloadData() // і виконує метод оновити табличку - коли табличка починає оновлючатися іде перевірка у екстеншені нижче у функції з методом cellForRowAt - бачить що indexPath.section більше не 0 - і відображає AlarmTableViewCell на нашому поточному вью
+        }
     }
     
 }

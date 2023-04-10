@@ -44,7 +44,7 @@ class ContactsTableViewCell: UITableViewCell {
     private let nameLbl: UILabel = {
         let label = UILabel()
         //label.text = передати в конфігурації дані з моделі name + surname
-        label.font = UIFont.systemFont(ofSize: 22, weight: .thin)
+        label.font = UIFont.systemFont(ofSize: 22, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -52,7 +52,7 @@ class ContactsTableViewCell: UITableViewCell {
     private let phoneLbl: UILabel = {
         let label = UILabel()
         //label.text = передати в конфігурації дані з моделі - phone Number
-        label.font = UIFont.systemFont(ofSize: 20, weight: .thin)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .thin)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -94,7 +94,7 @@ class ContactsTableViewCell: UITableViewCell {
         ]
         
         let phoneLblConstraints = [
-            phoneLbl.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            phoneLbl.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             phoneLbl.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 20)
         ]
         
@@ -107,11 +107,7 @@ class ContactsTableViewCell: UITableViewCell {
     
     public func configure(with model: ContactData) {
         
-        guard let name = model.name else { return }
-        guard let surname = model.surname else { return }
-        guard let phone = model.phoneNumber else { return }
-        
-        nameLbl.text = "\(name) \(surname)"
-        phoneLbl.text = phone
+        nameLbl.text = "\(model.name) \(model.surname)"
+        phoneLbl.text = model.phoneNumber
     }
 }

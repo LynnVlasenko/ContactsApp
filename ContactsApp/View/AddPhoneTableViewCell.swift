@@ -7,17 +7,19 @@
 
 import UIKit
 
-class AddPhoneTableViewCell: UITableViewCell, UITextFieldDelegate {
+class AddPhoneTableViewCell: UITableViewCell {
 
     static let identifier = "AddPhoneTableViewCell"
     
+    weak var delegate: NewContactDelegate?
+    
     static let shared = AddPhoneTableViewCell()
     
-    public var phoneData: String = "phone"
+    //public var phoneData: String = "phone"
     
     //MARK: - UI objects
     
-    private let addPhone: UITextField = {
+    public let addPhone: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Phone"
         textField.setLeftPaddingPoints(20)
@@ -39,6 +41,8 @@ class AddPhoneTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         //apply constraints
         applyConstraints()
+        
+        addPhone.delegate = self
     }
     //поки що не дуже розумію для чого ця штука, але має бути
     required init?(coder: NSCoder) {
@@ -63,11 +67,28 @@ class AddPhoneTableViewCell: UITableViewCell, UITextFieldDelegate {
         NSLayoutConstraint.activate(addPhoneConstraints)
     }
     
+    //намагалася типу якось захватити написані дані
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        phoneData = addPhone.text ?? "p"
+//    }
+//
+//    public func configure(with model: ContactData) {
+//        phoneData = model.phoneNumber ?? "ph"
+//    }
+}
+
+
+extension AddPhoneTableViewCell: UITextFieldDelegate {
+    //метод, що бере текст, якщо він є і повертає його через делегат
     func textFieldDidEndEditing(_ textField: UITextField) {
-        phoneData = addPhone.text ?? "p"
+        guard let text = textField.text else { return }
+        //Показує чи працює кнопка ретурн для текст філду
+        delegate?.didFillPhoneField(with: text)
     }
     
-    public func configure(with model: ContactData) {
-        phoneData = model.phoneNumber ?? "ph"
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //метод сгортає клавіатуру
+        textField.resignFirstResponder()
+        return true
     }
 }

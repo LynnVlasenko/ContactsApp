@@ -8,9 +8,9 @@
 import Foundation
 
 struct ContactData: Codable {
-    let name: String?
-    let surname: String?
-    let phoneNumber: String?
+    let name: String
+    let surname: String
+    let phoneNumber: String
 }
 
 struct ContactPhoto: Codable {

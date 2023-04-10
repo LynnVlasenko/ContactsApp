@@ -7,14 +7,14 @@
 
 import UIKit
 
-class AddNameTableViewCell: UITableViewCell, UITextFieldDelegate {
+class AddNameTableViewCell: UITableViewCell {
 
     static let identifier = "AddNameTableViewCell"
     
+    weak var delegate: NewContactDelegate?
+    
     static let shared = AddNameTableViewCell()
     
-    public var nameData: String = "name"
-    //static let shared = AddContactTableViewCell()
     
     //MARK: - UI objects
     public let addName: UITextField = {
@@ -25,21 +25,6 @@ class AddNameTableViewCell: UITableViewCell, UITextFieldDelegate {
         return textField
     }()
     
-//    private let addSurname: UITextField = {
-//        let textField = UITextField()
-//        textField.placeholder = "Surname"
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        return textField
-//    }()
-//
-//    private let addPhone: UITextField = {
-//        let textField = UITextField()
-//        textField.placeholder = "Телефон"
-//        //тут треба якось викликати цифрофу клавіатуру при натисканні на поле
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        return textField
-//    }()
-    
     
     //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -48,6 +33,7 @@ class AddNameTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         //addName.frame = contentView.bounds
         // add subviews
+        addName.delegate = self
         addSubviews()
         
         //apply constraints
@@ -93,29 +79,29 @@ class AddNameTableViewCell: UITableViewCell, UITextFieldDelegate {
 //        NSLayoutConstraint.activate(addPhoneConstraints)
     }
     
+//    public func textFieldDidEndEditing(_ textField: UITextField) {
+//        nameData = addName.text ?? "n"
+//        print(nameData)
+//    }
+    
     //MARK: - Configure cell
-//    private var addData = [UITextField]()
-//
-//    private func addTextFielf() {
-//        addData.append(addName)
-//        addData.append(addName)
-//        addData.append(addName)
-//    }
-//
-//    func getTextField() -> [UITextField] {
-//        return addData
-//    }
     
-//    public func saveName() {
-//        nameData.append(addName.text ?? "")
+//    public func configure(with model: ContactData) {
+//        nameData = model.name ?? "nm"
 //    }
-    
-    public func textFieldDidEndEditing(_ textField: UITextField) -> String {
-        nameData = addName.text ?? "n"
-        return nameData
+}
+
+extension AddNameTableViewCell: UITextFieldDelegate {
+    //метод, що бере текст, якщо він є і повертає його через делегат
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        //Показує чи працює кнопка ретурн для текст філду
+        delegate?.didFillNameField(with: text)
     }
     
-    public func configure(with model: ContactData) {
-        nameData = model.name ?? "nm"
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //метод сгортає клавіатуру
+        textField.resignFirstResponder()
+        return true
     }
 }

@@ -18,11 +18,10 @@ class AddContactVC: UIViewController {
     
     var delegate: SetContactsDelegate?
     
-    private var contact = [ContactData]()
+    private var name: String?
+    private var surname: String?
+    private var phone: String?
     
-    //private let textFields = AddContactTableViewCell.shared.getTextField()
-    
-    //let array = ["fff", "dddd"]
     
     //MARK: - UI Elements
     
@@ -84,6 +83,7 @@ class AddContactVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.tintColor = .systemOrange
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(didTapDone))
+        navigationItem.rightBarButtonItem?.isHidden = true
         //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: #selector(cancleAction))
         
    }
@@ -92,27 +92,19 @@ class AddContactVC: UIViewController {
     
     @objc func didTapDone() {
         
-        
-        let name = AddNameTableViewCell.shared.textFieldDidEndEditing(AddNameTableViewCell.shared.addName)
-        let surname = AddSurnameTableViewCell.shared.surnameData
-        let phone = AddPhoneTableViewCell.shared.phoneData
+        guard let name = name, let surname = surname, let phone = phone else { return }
 
         let model = ContactData(name: name, surname: surname, phoneNumber: phone)
-        
-        
+
         delegate?.getContact(contact: model)
         //оновити табличку ContactsVC - для відображення даних контакту - сортоване відображення
         //коли фото не буде завантажено - замість заглушки - поставити UIView сірого кольору - на якому зверху буде лейбла перша буква імені білого кольору - підготувати дизайн, розмістити поверх картинки і включати чи відключати відображення цієї в'юшки.
         //тут же прописати функцію збереження фото в папку Документи. (створити її можна поза межами кнопки - тут виконати)
         //тут же дані мають зберегтися в plist, і потім прописати відобрадення цих даних на ContactsVC при відкритті застосунку
-        let vc = ContactsVC()
-        navigationController?.pushViewController(vc, animated: false)
+        
+        navigationController?.popViewController(animated: false)
         print("name: \(name) surname: \(surname), phone: \(phone)")
     }
-    
-//    @objc func cancleAction() {
-//        dismiss(animated: true)
-//    }
     
     private func applyConstraints() {
         let userImageConstraints = [
@@ -138,9 +130,7 @@ class AddContactVC: UIViewController {
         NSLayoutConstraint.activate(addPhotoButtonConstraints)
         NSLayoutConstraint.activate(addContactTableConstraints)
     }
-
 }
-
 
 extension AddContactVC: UITableViewDataSource, UITableViewDelegate {
     
@@ -154,23 +144,53 @@ extension AddContactVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //AddPhoneTableViewCell
         
         if indexPath.row == 2 {
             guard let phoneCell = tableView.dequeueReusableCell(withIdentifier: AddPhoneTableViewCell.identifier, for: indexPath) as? AddPhoneTableViewCell else { return UITableViewCell()}
+            //підписуєіо делегат комірки - це змушує підпорядкувати вью контроллер до протоколу NewContactDelegate, (делегат, якого переданий в комірках) і виконати усі його функції, що ми робимо в екстеншені
+            phoneCell.delegate = self
             return phoneCell
         }
         
         if indexPath.row == 1 {
             guard let surnameCell = tableView.dequeueReusableCell(withIdentifier: AddSurnameTableViewCell.identifier, for: indexPath) as? AddSurnameTableViewCell else { return UITableViewCell()}
+            //підписуєіо делегат комірки - це змушує підпорядкувати вью контроллер до протоколу NewContactDelegate, (делегат, якого переданий в комірках) і виконати усі його функції, що ми робимо в екстеншені
+            surnameCell.delegate = self
             return surnameCell
         }
         
         guard let nameCell = tableView.dequeueReusableCell(withIdentifier: AddNameTableViewCell.identifier, for: indexPath) as? AddNameTableViewCell else { return UITableViewCell()}
+        //підписуєіо делегат комірки - це змушує підпорядкувати вью контроллер до протоколу NewContactDelegate, (делегат, якого переданий в комірках) і виконати усі його функції, що ми робимо в екстеншені
+        nameCell.delegate = self
         return nameCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+}
+
+extension AddContactVC: NewContactDelegate {
+    
+    func didFillNameField(with text: String) {
+        //Щоб кнопка done зʼявлялася тільки коли всі поля заповнені
+        if (surname != nil && surname != "") && (phone != nil && phone != "") {
+            navigationItem.rightBarButtonItem?.isHidden = false
+        }
+        name = text //створена порожня змінна name = отриманий текст - якиq дає нам реалізована функція didFillNameField в textFieldDidEndEditing методі в AddNameTableViewCell.swift
+    }
+    
+    func didFillSurnameField(with text: String) {
+        if (name != nil && name != "") && (phone != nil && phone != "") {
+            navigationItem.rightBarButtonItem?.isHidden = false
+        }
+        surname = text
+    }
+    
+    func didFillPhoneField(with text: String) {
+        if (name != nil && name != "") && (surname != nil && surname != "") {
+            navigationItem.rightBarButtonItem?.isHidden = false
+        }
+        phone = text
     }
 }
