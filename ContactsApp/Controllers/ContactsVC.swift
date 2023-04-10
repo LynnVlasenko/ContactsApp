@@ -26,7 +26,7 @@ class ContactsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
+        view.addSubview(contactsTable)
         configureNavBar()
         applyDelegates()
         //реалізувати відображення даних контактів, які вже створені(з plist). щоб відобразилися при відкритті програми.
