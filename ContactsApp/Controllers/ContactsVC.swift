@@ -82,7 +82,8 @@ extension ContactsVC: SetContactsDelegate {
     
     func getContact(contact: ContactData) {
         DispatchQueue.main.async {
-            self.contacts.append(contact) //додає Alarm дані до масиву alarms
+            self.contacts.append(contact) //додає contact дані до масиву contacts
+            self.contacts = self.contacts.sorted { $0.name.lowercased() < $1.name.lowercased() } //сортуємо наш масив
             self.contactsTable.reloadData() // і виконує метод оновити табличку - коли табличка починає оновлючатися іде перевірка у екстеншені нижче у функції з методом cellForRowAt - бачить що indexPath.section більше не 0 - і відображає AlarmTableViewCell на нашому поточному вью
         }
     }
