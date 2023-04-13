@@ -21,6 +21,7 @@ class AddContactVC: UIViewController {
     private var name: String?
     private var surname: String?
     private var phone: String?
+    private var photo: UIImage?
     
     
     //MARK: - UI Elements
@@ -106,8 +107,11 @@ class AddContactVC: UIViewController {
         let model = ContactData(name: name, surname: surname, phoneNumber: phone)
 
         delegate?.getContact(contact: model)
-        //оновити табличку ContactsVC - для відображення даних контакту - сортоване відображення
-        //коли фото не буде завантажено - замість заглушки - поставити UIView сірого кольору - на якому зверху буде лейбла перша буква імені білого кольору - підготувати дизайн, розмістити поверх картинки і включати чи відключати відображення цієї в'юшки.
+        
+//        let encoder = PropertyListEncoder()
+//        encoder.outputFormat = .xml
+//        let path
+        
         //тут же прописати функцію збереження фото в папку Документи. (створити її можна поза межами кнопки - тут виконати)
         //тут же дані мають зберегтися в plist, і потім прописати відобрадення цих даних на ContactsVC при відкритті застосунку
         

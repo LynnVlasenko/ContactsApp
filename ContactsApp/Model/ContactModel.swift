@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 struct ContactData: Codable {
     let name: String
     let surname: String
     let phoneNumber: String
+    //let photo: UIImage?
 }
 
-struct ContactPhoto: Codable {
-    let photo: URL?
+struct ContactPhoto {
+    let photo: UIImage?
 }

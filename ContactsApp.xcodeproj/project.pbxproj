@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C01494529E82A46000C0D8E /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C01494429E82A46000C0D8E /* FileHandler.swift */; };
 		6C29406229E00D5800C501D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C29406129E00D5800C501D7 /* AppDelegate.swift */; };
 		6C29406429E00D5800C501D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C29406329E00D5800C501D7 /* SceneDelegate.swift */; };
 		6C29406629E00D5800C501D7 /* ContactsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C29406529E00D5800C501D7 /* ContactsVC.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6C01494429E82A46000C0D8E /* FileHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
 		6C29405E29E00D5800C501D7 /* ContactsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C29406129E00D5800C501D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C29406329E00D5800C501D7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				6C29407B29E0114900C501D7 /* View */,
 				6C29406129E00D5800C501D7 /* AppDelegate.swift */,
 				6C29406329E00D5800C501D7 /* SceneDelegate.swift */,
+				6C01494429E82A46000C0D8E /* FileHandler.swift */,
 				6C29406A29E00D5B00C501D7 /* Assets.xcassets */,
 				6C29406C29E00D5B00C501D7 /* LaunchScreen.storyboard */,
 				6C29406F29E00D5B00C501D7 /* Info.plist */,
@@ -201,6 +204,7 @@
 				6C29407F29E0160E00C501D7 /* AddContactVC.swift in Sources */,
 				6C32BB2429E2F3BE00379A9A /* SettingTableViewCell.swift in Sources */,
 				6C29406629E00D5800C501D7 /* ContactsVC.swift in Sources */,
+				6C01494529E82A46000C0D8E /* FileHandler.swift in Sources */,
 				6C32BB2229E2EDDE00379A9A /* SettingVC.swift in Sources */,
 				6C29406229E00D5800C501D7 /* AppDelegate.swift in Sources */,
 				6C29406429E00D5800C501D7 /* SceneDelegate.swift in Sources */,

@@ -19,5 +19,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow access to the photos for uploading its into contscts list</string>
 </dict>
 </plist>

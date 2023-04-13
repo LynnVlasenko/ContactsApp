@@ -22,25 +22,6 @@ class ContactsTableViewCell: UITableViewCell {
         return img
     }()
     
-    //для заглушки фото, якщо не встановили___________
-    private let circleView: UIView = {
-        let view = UIView()
-        view.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        view.layer.cornerRadius = view.frame.width / 2.0
-        view.backgroundColor = .systemGray4
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let initials: UILabel = {
-        let label = UILabel()
-        label.text = "" //передати сюди першу літеру імені
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    //_______________________________________________
-    
     private let nameLbl: UILabel = {
         let label = UILabel()
         //label.text = передати в конфігурації дані з моделі name + surname
@@ -109,5 +90,10 @@ class ContactsTableViewCell: UITableViewCell {
         
         nameLbl.text = "\(model.name) \(model.surname)"
         phoneLbl.text = model.phoneNumber
+        //userImage.image = model.photo
     }
+    
+//    public func configure(with model: ContactPhoto) {
+//        userImage.image = model.photo
+//    }
 }

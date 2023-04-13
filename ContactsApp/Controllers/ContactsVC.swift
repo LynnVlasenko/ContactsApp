@@ -37,6 +37,8 @@ class ContactsVC: UIViewController {
         configureNavBar()
         applyDelegates()
         //реалізувати відображення даних контактів, які вже створені(з plist). щоб відобразилися при відкритті програми.
+        
+        //вже створила папку Photo за допомогою функції з FileHandler()
     }
     
     override func viewDidLayoutSubviews() {
