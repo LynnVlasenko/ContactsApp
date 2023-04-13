@@ -40,6 +40,7 @@ class AddContactVC: UIViewController {
         let button = UIButton()
         button.setTitle("Додати фото", for: .normal)
         button.setTitleColor(.systemOrange, for: .normal)
+        button.addTarget(self, action: #selector(didTabButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -89,6 +90,14 @@ class AddContactVC: UIViewController {
    }
     
 //MARK: - Actions
+    
+    @objc func didTabButton() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary //відкриває бібліотеку фото, також можна тут обирати камеру .camera
+        vc.delegate = self //далі в розширенні передаємо 2 делегати UIImagePickerControllerDelegate, UINavigationControllerDelegate
+        vc.allowsEditing = true //для можливості обрізати фото по квадрату
+        present(vc, animated: true)
+    }
     
     @objc func didTapDone() {
         
@@ -192,5 +201,26 @@ extension AddContactVC: NewContactDelegate {
             navigationItem.rightBarButtonItem?.isHidden = false
         }
         phone = text
+    }
+}
+
+
+extension AddContactVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+     
+    //перша функція яку маю реалізувати для завершення вибору медіа інформації - в нашому випадку фото. І ця інфо є масивом, який містить купу речей, які повертаються і це те з відки ми фактично витягнемо зображення
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        //тут ми хочемо витягнути фотографію
+        //для цього маємо використати ключ - для того щоб його знайти - треба зробити print(info) і скопіювати його
+        //print("\(info)")
+        //ми переконуємося, що словник інформації містить щось із цим ключем і ми хочемо переконатись, що це зображення. І якщо це так, то ми хочемо кинути його у цю змінну imageView.image і призначити його цьому зображенню image
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            userImage.image = image
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //друга функція - для сказування всієї операції
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }
