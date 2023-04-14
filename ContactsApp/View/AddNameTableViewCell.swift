@@ -60,37 +60,11 @@ class AddNameTableViewCell: UITableViewCell {
             addName.heightAnchor.constraint(equalToConstant: 50)
         ]
         
-//        let addSurnameConstraints = [
-//            addSurname.topAnchor.constraint(equalTo: addName.topAnchor),
-//            addSurname.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            addSurname.widthAnchor.constraint(equalToConstant: contentView.frame.width),
-//            addSurname.heightAnchor.constraint(equalToConstant: 50)
-//        ]
-//        
-//        let addPhoneConstraints = [
-//            addPhone.topAnchor.constraint(equalTo: addSurname.topAnchor),
-//            addPhone.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            addPhone.widthAnchor.constraint(equalToConstant: contentView.frame.width),
-//            addPhone.heightAnchor.constraint(equalToConstant: 50)
-//        ]
-        
         NSLayoutConstraint.activate(addNameConstraints)
-//        NSLayoutConstraint.activate(addSurnameConstraints)
-//        NSLayoutConstraint.activate(addPhoneConstraints)
     }
-    
-//    public func textFieldDidEndEditing(_ textField: UITextField) {
-//        nameData = addName.text ?? "n"
-//        print(nameData)
-//    }
-    
-    //MARK: - Configure cell
-    
-//    public func configure(with model: ContactData) {
-//        nameData = model.name ?? "nm"
-//    }
 }
 
+// MARK: - Extension for UITextFieldDelegate
 extension AddNameTableViewCell: UITextFieldDelegate {
     //метод, що бере текст, якщо він є і повертає його через делегат
     func textFieldDidEndEditing(_ textField: UITextField) {

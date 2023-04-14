@@ -15,8 +15,6 @@ class AddPhoneTableViewCell: UITableViewCell {
     
     static let shared = AddPhoneTableViewCell()
     
-    //public var phoneData: String = "phone"
-    
     //MARK: - UI objects
     
     public let addPhone: UITextField = {
@@ -66,18 +64,9 @@ class AddPhoneTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate(addPhoneConstraints)
     }
-    
-    //намагалася типу якось захватити написані дані
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        phoneData = addPhone.text ?? "p"
-//    }
-//
-//    public func configure(with model: ContactData) {
-//        phoneData = model.phoneNumber ?? "ph"
-//    }
 }
 
-
+// MARK: - Extension for UITextFieldDelegate
 extension AddPhoneTableViewCell: UITextFieldDelegate {
     //метод, що бере текст, якщо він є і повертає його через делегат
     func textFieldDidEndEditing(_ textField: UITextField) {

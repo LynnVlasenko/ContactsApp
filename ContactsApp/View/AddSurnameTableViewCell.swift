@@ -63,17 +63,9 @@ class AddSurnameTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate(addSurnameConstraints)
     }
-    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        surnameData = addSurname.text ?? "s"
-//    }
-//    
-//    public func configure(with model: ContactData) {
-//        surnameData = model.surname ?? "su"
-//    }
 }
 
-
+// MARK: - Extension for UITextFieldDelegate
 extension AddSurnameTableViewCell: UITextFieldDelegate {
     //метод, що бере текст, якщо він є і повертає його через делегат
     func textFieldDidEndEditing(_ textField: UITextField) {

@@ -10,12 +10,15 @@
 
 import UIKit
 
+//протокол для оновлення даних контакту. Функція реалізовується в ContactsVC
 protocol SetContactsDelegate {
-    func getContact(contact: ContactData)
+    //func getContact(contact: ContactData)
+    func updateContacts()
 }
 
 class AddContactVC: UIViewController {
     
+    //створюємо делегат для протоколу
     var delegate: SetContactsDelegate?
     
     private var name: String?
@@ -72,12 +75,14 @@ class AddContactVC: UIViewController {
 //        addContactTable.frame = view.bounds
 //    }
     
+    //MARK: - addSubviews
     private func addSubviews() {
         view.addSubview(userImage)
         view.addSubview(addPhotoButton)
         view.addSubview(addContactTable)
     }
     
+    //MARK: - NavigationBar
     private func configureNavBar() {
         //let nav = UINavigationController(rootViewController: AddContactVC())
         title = "New Contact"
@@ -90,8 +95,7 @@ class AddContactVC: UIViewController {
         
    }
     
-//MARK: - Actions
-    
+    //MARK: - Actions
     @objc func didTabButton() {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary //відкриває бібліотеку фото, також можна тут обирати камеру .camera
@@ -101,24 +105,36 @@ class AddContactVC: UIViewController {
     }
     
     @objc func didTapDone() {
-        
         guard let name = name, let surname = surname, let phone = phone else { return }
-
-        let model = ContactData(name: name, surname: surname, phoneNumber: phone)
-
-        delegate?.getContact(contact: model)
         
-//        let encoder = PropertyListEncoder()
-//        encoder.outputFormat = .xml
-//        let path
+        //Робимо з картинки дані
+        guard let imageData = userImage.image?.jpegData(compressionQuality: 1.0) else { return } // jpegData(compressionQuality: 1.0) - повернути зображення як JPEG. Може повернути нуль, якщо зображення не має CGImageRef або недійсний растровий формат. стиснення 0 (найбільше)..1 (найменше)
         
-        //тут же прописати функцію збереження фото в папку Документи. (створити її можна поза межами кнопки - тут виконати)
-        //тут же дані мають зберегтися в plist, і потім прописати відобрадення цих даних на ContactsVC при відкритті застосунку
+        //Заповнюємо модель
+        let model = Contact(id: UUID().uuidString, name: name, surname: surname, phoneNumber: phone, photo: imageData)
         
+        //І збергіємо контакт
+        FileHandler.shared.saveContact(model)
+        
+        //оновлюємо дані масиву з контактави і оновлюємо табличку
+        delegate?.updateContacts()
+        
+        //переходимо до попереднього VC з якого прийшли - а це ContactsVC.
         navigationController?.popViewController(animated: false)
+        
         print("name: \(name) surname: \(surname), phone: \(phone)")
+        
+        //Попередня версія без plist-a
+//        guard let name = name, let surname = surname, let phone = phone else { return }
+//        let model = ContactData(name: name, surname: surname, phoneNumber: phone)
+//        delegate?.getContact(contact: model)
+//        navigationController?.popViewController(animated: false)
+//        print("name: \(name) surname: \(surname), phone: \(phone)")
+
+        //тут же прописати функцію збереження фото в папку Документи. (створити її можна поза межами кнопки - тут виконати)
     }
     
+    //MARK: - Constraints
     private func applyConstraints() {
         let userImageConstraints = [
             userImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -145,6 +161,7 @@ class AddContactVC: UIViewController {
     }
 }
 
+// MARK: - Extension for Table
 extension AddContactVC: UITableViewDataSource, UITableViewDelegate {
     
     private func applyDelegates() {
@@ -183,6 +200,7 @@ extension AddContactVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - Extension for Protocol - NewContactDelegate
 extension AddContactVC: NewContactDelegate {
     
     func didFillNameField(with text: String) {
@@ -208,7 +226,7 @@ extension AddContactVC: NewContactDelegate {
     }
 }
 
-
+// MARK: - Extension for ImagePickerController
 extension AddContactVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
      
     //перша функція яку маю реалізувати для завершення вибору медіа інформації - в нашому випадку фото. І ця інфо є масивом, який містить купу речей, які повертаються і це те з відки ми фактично витягнемо зображення

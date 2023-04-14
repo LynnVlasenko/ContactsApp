@@ -11,6 +11,7 @@ class ContactsTableViewCell: UITableViewCell {
 
     static let identifier = "ContactsTableViewCell"
     
+    //MARK: - UI Elements
     private let userImage: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "user")
@@ -86,13 +87,20 @@ class ContactsTableViewCell: UITableViewCell {
     
     //MARK: - Configure cell
     
-    public func configure(with model: ContactData) {
-        
+    public func configure(with model: Contact) {
         nameLbl.text = "\(model.name) \(model.surname)"
         phoneLbl.text = model.phoneNumber
-        //userImage.image = model.photo
+        userImage.image = UIImage(data: model.photo)
     }
     
+    //Попередній вигляд - без plist
+//    public func configure(with model: ContactData) {
+//
+//        nameLbl.text = "\(model.name) \(model.surname)"
+//        phoneLbl.text = model.phoneNumber
+//        //userImage.image = model.photo
+//    }
+//
 //    public func configure(with model: ContactPhoto) {
 //        userImage.image = model.photo
 //    }

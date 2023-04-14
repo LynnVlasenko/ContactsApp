@@ -36,6 +36,7 @@ class SettingVC: UIViewController {
    }
 }
 
+// MARK: - Extension for Table
 extension SettingVC: UITableViewDataSource, UITableViewDelegate {
     
     private func applyDelegates() {

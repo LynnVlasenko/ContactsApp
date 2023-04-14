@@ -6,15 +6,24 @@
 //
 
 import Foundation
-import UIKit
 
-struct ContactData: Codable {
+struct Contact: Codable {
+    let id: String
     let name: String
     let surname: String
     let phoneNumber: String
-    //let photo: UIImage?
+    let photo: Data
 }
 
-struct ContactPhoto {
-    let photo: UIImage?
-}
+//Попередні моделі, коли без plist
+//struct ContactData: Codable {
+//    let name: String
+//    let surname: String
+//    let phoneNumber: String
+//    //let photo: UIImage?
+//}
+//
+//struct ContactPhoto {
+//    let photo: UIImage?
+//}
+
